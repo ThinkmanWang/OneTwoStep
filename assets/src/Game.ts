@@ -6,6 +6,7 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import Stage from "./Stage";
+import OverPanel from "./OverPanel"
 
 const {ccclass, property} = cc._decorator;
 
@@ -16,6 +17,8 @@ export default class Game extends cc.Component {
     private stage: Stage = null;
     @property(cc.Label)
     private scoreLabel: cc.Label = null;
+    @property(OverPanel)
+    private overPanel: OverPanel = null;
 
     private score: number = 0;
 
@@ -32,10 +35,13 @@ export default class Game extends cc.Component {
         this.score = 0;
         this.scoreLabel.string = '0';
         this.stage.init(this);
+        this.overPanel.init(this);
+        this.overPanel.hide();
     }
 
     public overGame() {
         cc.log('game over');
+        this.overPanel.show(this.score);
     }
 
     public restartGame() {
