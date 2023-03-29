@@ -5,27 +5,30 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
+import Game from './Game';
+import Player from './Player';
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class Menu extends cc.Component {
+export default class Stage extends cc.Component {
 
-    @property(cc.Label)
-    label: cc.Label = null;
+    @property(Player)
+    private player: Player = null;
 
-    @property
-    text: string = 'hello';
+    private game: Game = null;
 
-    // LIFE-CYCLE CALLBACKS:
+    public init(game: Game) {
+        this.game = game;
+    }
 
-    // onLoad () {}
+    public playerJump(step: number) {
+        console.log("player jump");
+        this.player.jump(step);
+    }
 
     start () {
 
-    }
-
-    private onBtnStart() {
-        cc.director.loadScene("game");
     }
 
     // update (dt) {}

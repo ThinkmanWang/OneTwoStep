@@ -8,7 +8,7 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class Menu extends cc.Component {
+export default class block extends cc.Component {
 
     @property(cc.Label)
     label: cc.Label = null;
@@ -21,11 +21,8 @@ export default class Menu extends cc.Component {
     // onLoad () {}
 
     start () {
-
-    }
-
-    private onBtnStart() {
-        cc.director.loadScene("game");
+        console.log("start block");
+        cc.log("start block");
     }
 
     // update (dt) {}

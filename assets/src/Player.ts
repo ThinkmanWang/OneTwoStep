@@ -8,24 +8,24 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class Menu extends cc.Component {
+export default class Player extends cc.Component {
 
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
-
-    start () {
-
+    public jump(step: number) {
+        if (step === 1) {
+            cc.log('我跳了1步');
+            console.log("jump 1 step");
+        } else if (step === 2) {
+            cc.log('我跳了2步');
+            console.log("jump 2 step");
+        }
     }
 
-    private onBtnStart() {
-        cc.director.loadScene("game");
+    public die() {
+        cc.log('我死了');
+    }
+
+    start () {
+        console.log("start player");
     }
 
     // update (dt) {}
