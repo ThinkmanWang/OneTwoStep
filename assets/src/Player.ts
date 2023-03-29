@@ -13,13 +13,17 @@ export default class Player extends cc.Component {
     private stepDistance: number; // 一步跳跃距离
     private jumpHeight: number; // 跳跃高度
     private jumpDuration: number; // 跳跃持续时间
+    private fallDuration: number; // 坠落持续时间
+    private fallHeight: number; // 坠落高度
     public canJump: boolean; // 此时是否能跳跃
+    public index: number; // 当前跳到第几格
 
     public init(stepDistance: number, jumpHeight: number, jumpDuration: number) {
         this.stepDistance = stepDistance;
         this.jumpHeight = jumpHeight;
         this.jumpDuration = jumpDuration;
         this.canJump = true;
+        this.index = 0;
     }
 
     public jump(step: number) {
@@ -32,7 +36,7 @@ export default class Player extends cc.Component {
         }
 
         this.canJump = false;
-        // this.index += step;
+        this.index += step;
         let jumpAction = cc.jumpBy(this.jumpDuration, cc.v2(step * this.stepDistance, 0), this.jumpHeight, 1);
         let finishAction = cc.callFunc(() => {
             this.canJump = true;
