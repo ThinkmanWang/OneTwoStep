@@ -760,6 +760,9 @@
       "__id__": 10
     },
     "_enabled": true,
+    "stepDistance": 200,
+    "jumpHeight": 100,
+    "jumpDuration": 0.3,
     "player": {
       "__id__": 13
     },

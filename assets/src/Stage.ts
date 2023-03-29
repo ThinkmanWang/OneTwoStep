@@ -13,6 +13,15 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class Stage extends cc.Component {
 
+    @property(cc.Integer)
+    private stepDistance: number = 200;
+
+    @property(cc.Integer)
+    private jumpHeight: number = 100;
+
+    @property(cc.Float)
+    private jumpDuration: number = 0.3;
+
     @property(Player)
     private player: Player = null;
 
@@ -20,11 +29,14 @@ export default class Stage extends cc.Component {
 
     public init(game: Game) {
         this.game = game;
+        this.player.init(this.stepDistance, this.jumpHeight, this.jumpDuration);
     }
 
     public playerJump(step: number) {
         console.log("player jump");
-        this.player.jump(step);
+        if (this.player.canJump) {
+            this.player.jump(step);
+        }
     }
 
     start () {

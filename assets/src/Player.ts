@@ -10,6 +10,18 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class Player extends cc.Component {
 
+    private stepDistance: number; // 一步跳跃距离
+    private jumpHeight: number; // 跳跃高度
+    private jumpDuration: number; // 跳跃持续时间
+    public canJump: boolean; // 此时是否能跳跃
+
+    public init(stepDistance: number, jumpHeight: number, jumpDuration: number) {
+        this.stepDistance = stepDistance;
+        this.jumpHeight = jumpHeight;
+        this.jumpDuration = jumpDuration;
+        this.canJump = true;
+    }
+
     public jump(step: number) {
         if (step === 1) {
             cc.log('我跳了1步');
@@ -18,6 +30,14 @@ export default class Player extends cc.Component {
             cc.log('我跳了2步');
             console.log("jump 2 step");
         }
+
+        this.canJump = false;
+        // this.index += step;
+        let jumpAction = cc.jumpBy(this.jumpDuration, cc.v2(step * this.stepDistance, 0), this.jumpHeight, 1);
+        let finishAction = cc.callFunc(() => {
+            this.canJump = true;
+        });
+        this.node.runAction(cc.sequence(jumpAction, finishAction));
     }
 
     public die() {
