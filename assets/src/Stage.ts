@@ -40,7 +40,7 @@ export default class Stage extends cc.Component {
         this.player.init(this.stepDistance, this.jumpHeight, this.jumpDuration);
 
         this.blockList = [];
-        this.addBlock(cc.v3(0, 0));
+        this.addBlock(cc.v3(0, -200));
         for (let i = 0; i < 5; i++) {
             this.randomAddBlock();
         }
@@ -70,7 +70,7 @@ export default class Stage extends cc.Component {
 
     private randomAddBlock() {
         if (!this.lastBlock || Math.random() > 0.5) {
-            this.addBlock(cc.v3(this.lastBlockX + this.stepDistance, 0));
+            this.addBlock(cc.v3(this.lastBlockX + this.stepDistance, -200));
         } else {
             this.addBlank();
         }
@@ -79,7 +79,9 @@ export default class Stage extends cc.Component {
 
     private addBlock(position: cc.Vec3) {
         let blockNode = cc.instantiate(this.blockPrefab);
-        this.node.addChild(blockNode);
+        console.log(blockNode);
+
+        this.node.addChild(blockNode, 1, "");
         blockNode.position = position;
         this.blockList.push(blockNode.getComponent(Block));
         this.lastBlock = true;
