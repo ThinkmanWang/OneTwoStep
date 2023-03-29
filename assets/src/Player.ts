@@ -18,10 +18,12 @@ export default class Player extends cc.Component {
     public canJump: boolean; // 此时是否能跳跃
     public index: number; // 当前跳到第几格
 
-    public init(stepDistance: number, jumpHeight: number, jumpDuration: number) {
+    public init(stepDistance: number, jumpHeight: number, jumpDuration: number, fallDuration: number, fallHeight: number) {
         this.stepDistance = stepDistance;
         this.jumpHeight = jumpHeight;
         this.jumpDuration = jumpDuration;
+        this.fallDuration = fallDuration;
+        this.fallHeight = fallHeight;
         this.canJump = true;
         this.index = 0;
     }
@@ -46,6 +48,10 @@ export default class Player extends cc.Component {
 
     public die() {
         cc.log('我死了');
+
+        this.canJump = false;
+        let dieAction = cc.moveBy(this.fallDuration, cc.v2(0, -this.fallHeight));
+        this.node.runAction(dieAction);
     }
 
     start () {

@@ -33,17 +33,38 @@ export default class Stage extends cc.Component {
     private lastBlockX = 0; // 记录上一次添加Block的x坐标
     private blockList: Array<Block>; // 记录添加的Block列表
 
+    @property(cc.Integer)
+    private fallHeight: number = 500;
+    @property(cc.Float)
+    private fallDuration: number = 0.3;
+    @property(cc.Float)
+    private initStayDuration: number = 2; // 初始停留时间
+    @property(cc.Float)
+    private minStayDuration: number = 0.3; // 最小停留时间，不能再快了的那个点，不然玩家就反应不过来了
+    @property(cc.Float)
+    private speed: number = 0.1;
+
+    private stayDuration: number; // 停留时间
+
     private game: Game = null;
 
     public init(game: Game) {
         this.game = game;
-        this.player.init(this.stepDistance, this.jumpHeight, this.jumpDuration);
-
+        this.stayDuration = this.initStayDuration;
+        this.player.init(this.stepDistance, this.jumpHeight, this.jumpDuration, this.fallDuration, this.fallHeight);
         this.blockList = [];
         this.addBlock(cc.v3(0, -200));
         for (let i = 0; i < 5; i++) {
             this.randomAddBlock();
         }
+    }
+
+    public addSpeed() {
+        this.stayDuration -= this.speed;
+        if (this.stayDuration <= this.minStayDuration) {
+            this.stayDuration = this.minStayDuration;
+        }
+        cc.log(this.stayDuration);
     }
 
     public playerJump(step: number) {
@@ -53,9 +74,22 @@ export default class Stage extends cc.Component {
             let isDead = !this.hasBlock(this.player.index);
             if (isDead) {
                 cc.log('die');
-                this.game.overGame();
+                this.scheduleOnce(() => { // 这时还在空中，要等到落到地面在执行死亡动画
+                    this.player.die();
+                    this.game.overGame();
+                }, this.jumpDuration);
             } else {
-                this.game.addScore(step === 1 ? 1 : 3); // 跳一步得一分，跳两步的三分
+                let blockIndex = this.player.index;
+                this.blockList[blockIndex].init(this.fallDuration, this.fallHeight, this.stayDuration, () => { 
+                    if (this.player.index === blockIndex) { // 如果Block下落时玩家还在上面游戏结束
+                        this.player.die();
+                        this.game.overGame();
+                    }
+                });
+                this.game.addScore(step === 1 ? 1 : 3);
+            }
+            if (this.player.index % 10 === 0) {
+                this.addSpeed();
             }
         }
     }

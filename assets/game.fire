@@ -780,6 +780,11 @@
     "blockPrefab": {
       "__uuid__": "b7a8fb3e-ed46-4c86-bc35-a05914ed652b"
     },
+    "fallHeight": 500,
+    "fallDuration": 0.3,
+    "initStayDuration": 2,
+    "minStayDuration": 0.3,
+    "speed": 0.1,
     "_id": "f5z6rKcLtMp4NXMb7KgKU4"
   },
   {
@@ -814,8 +819,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 79,
-      "height": 76
+      "width": 200,
+      "height": 200
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -965,7 +970,7 @@
       "__uuid__": "4184a2a6-53e2-44aa-ac2d-6fee93230f47"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -1092,8 +1097,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 79,
-      "height": 76
+      "width": 200,
+      "height": 200
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1243,7 +1248,7 @@
       "__uuid__": "4184a2a6-53e2-44aa-ac2d-6fee93230f47"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",

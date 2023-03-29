@@ -19,5 +19,11 @@ export default class block extends cc.Component {
         cc.log("start block");
     }
 
-    // update (dt) {}
+    public init(fallDuration: number, fallHeight: number, destroyTime: number, destroyCb: Function) {
+        this.scheduleOnce(() => {
+            let fallAction = cc.moveBy(fallDuration, cc.v2(0, -fallHeight)); // 下沉动作
+            this.node.runAction(fallAction);
+            destroyCb();
+        }, destroyTime);
+    }
 }
